@@ -107,7 +107,7 @@ async def seed():
         await session.flush()
 
         # ── Demo citizen ─────────────────────────────────────────────────────
-        health_id = utils.generate_health_id()
+        health_id = "1234-5678-9012"
         citizen = models.Citizen(
             health_id=health_id,
             aadhaar_masked=utils.generate_masked_aadhaar(),

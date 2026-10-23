@@ -1,7 +1,36 @@
 # National Healthcare ID System 🚑
 
-> **A unified, Aadhaar‑style healthcare identity platform built with FastAPI, PostgreSQL (Neon), and Docker deployment on Render.**  
-> Every citizen has a unique 12-digit Health-ID (`XXXX-XXXX-XXXX`). Government-approved hospitals update baseline vitals and conduct periodic 3–5 month certifications; any hospital can view records and log visits; citizens can view their health profile and real-time cashless insurance balances.
+> **A unified, Aadhaar‑style healthcare identity platform and web application built with FastAPI, PostgreSQL (Neon), and Docker deployment on Render.**  
+> Every citizen has a unique 12-digit Health-ID (`XXXX-XXXX-XXXX`). Government-approved hospitals update baseline vitals and conduct periodic 3–5 month certifications; all hospitals can view records and log visits; citizens can view their health profile and real-time cashless insurance balances.
+
+---
+
+## 🌐 Full Web Application Features
+
+The application serves a complete, modern responsive web UI directly from the root URL (`/`):
+
+1. **🚨 Emergency Rescue Scan (Zero-Auth)**:
+   - Instant triage lookup by 12-digit Health-ID.
+   - Highlights critical drug allergies (e.g., Penicillin), blood group, organ donor consent, and emergency contact phone links.
+2. **🪪 Citizen Digital Health Card**:
+   - High-resolution physical smart-card replica with national insignia, photo avatar, chip illustration, and dynamic QR code.
+   - Live biometrics (Height, Weight, BMI with gauge, Blood group).
+   - Cashless Insurance Wallet (PM-JAY balance meter, coverage breakdown, and claim history).
+   - Medical visit timeline with doctor prescriptions.
+   - One-click print/download digital ID card.
+3. **🏥 Hospital Clinical Desk**:
+   - Patient search by Health-ID.
+   - **Log Medical Visits**: Record doctor, department, symptoms, diagnosis, prescriptions, and advice.
+   - **3–5 Month Vitals Certification (Gov-Approved Hospitals)**: AIIMS/District hospitals conduct examinations, calculate BMI, and issue cryptographic SHA256 digital seals.
+   - **Cashless Claim Settlement**: Instant pre-auth deduction from PM-JAY policy with live balance update.
+4. **🛡️ Admin Management Center**:
+   - System KPIs and counters.
+   - Review and approve/reject pending hospital license applications.
+   - Enroll new citizens and automatically assign ₹5,00,000 PM-JAY insurance policies.
+   - Citizen directory.
+5. **⚡ 1-Click Demo Login & Auto-Seed**:
+   - Pre-configured demo accounts in the navigation bar for instant testing (`admin`, `govhospital`, `stdhospital`, and John Doe citizen).
+
 
 ---
 

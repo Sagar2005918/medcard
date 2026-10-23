@@ -3,12 +3,15 @@ main.py – FastAPI application entry point for the National Healthcare ID Syste
 """
 
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse, JSONResponse
 
 from .database import engine, Base
 from .routers import auth, admin, citizens, insurance, public
@@ -23,6 +26,11 @@ app = FastAPI(
         "insurance balances are tracked in real-time."
     ),
 )
+
+# ─── Static Files & Frontend ──────────────────────────────────────────────────
+STATIC_DIR = Path(__file__).parent / "static"
+if STATIC_DIR.exists():
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 # ─── CORS ──────────────────────────────────────────────────────────────────────
 app.add_middleware(
@@ -49,7 +57,13 @@ app.include_router(public.router,    prefix="/api/public",    tags=["Public"])
 
 # ─── Health check & Root ───────────────────────────────────────────────────────
 @app.get("/", tags=["Root"])
-async def root():
+async def root(request: Request):
+    index_file = STATIC_DIR / "index.html"
+    accept = request.headers.get("accept", "")
+    # If client prefers HTML or browser request, serve the web app
+    if index_file.exists() and "application/json" not in accept:
+        return FileResponse(str(index_file))
+    # Otherwise return API status
     return {
         "status": "online",
         "service": "National Healthcare ID System API",
@@ -57,7 +71,16 @@ async def root():
         "docs_url": "/docs",
         "redoc_url": "/redoc",
         "health_check": "/health",
+        "website_url": "/",
     }
+
+@app.get("/portal", tags=["Root"])
+@app.get("/app", tags=["Root"])
+async def portal():
+    index_file = STATIC_DIR / "index.html"
+    if index_file.exists():
+        return FileResponse(str(index_file))
+    return JSONResponse(status_code=404, content={"detail": "Frontend file not found"})
 
 @app.get("/health", tags=["Health"])
 async def health_check():
