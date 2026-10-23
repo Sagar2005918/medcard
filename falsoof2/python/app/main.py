@@ -47,7 +47,18 @@ app.include_router(citizens.router,  prefix="/api/citizens",  tags=["Citizens"])
 app.include_router(insurance.router, prefix="/api/insurance", tags=["Insurance"])
 app.include_router(public.router,    prefix="/api/public",    tags=["Public"])
 
-# ─── Health check ──────────────────────────────────────────────────────────────
+# ─── Health check & Root ───────────────────────────────────────────────────────
+@app.get("/", tags=["Root"])
+async def root():
+    return {
+        "status": "online",
+        "service": "National Healthcare ID System API",
+        "version": "1.0.0",
+        "docs_url": "/docs",
+        "redoc_url": "/redoc",
+        "health_check": "/health",
+    }
+
 @app.get("/health", tags=["Health"])
 async def health_check():
     return {"status": "healthy", "service": "National Healthcare ID System"}
